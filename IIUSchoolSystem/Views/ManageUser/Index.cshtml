@@ -1,0 +1,58 @@
+﻿@using Telerik.Web.Mvc.UI
+@model Telerik.Web.Mvc.GridModel<IIUSchoolSystem.Models.UserModel>
+@{
+    ViewBag.Title = "Manage Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    @Scripts.Render("~/UserScripts/ManageUser.js")
+}
+<div class="page-header">
+    <h1>
+        Users
+        <small><i class="fa fa-angle-double-right"></i> Creation & Updation</small>
+         <button type="submit" class="btn btn-success btn-sm" id="createUser" style="float: right;">Create User</button>
+    </h1>
+</div>
+@Html.Partial("_EditOrCreateUser")
+<div class="widget">
+    <div class="widget-body form">
+        
+        @using (Html.BeginForm())
+        {
+            @(Html.Telerik().Grid(Model.Data)
+                  .Name("user-grid")
+                  .DataKeys(keys => keys.Add(p => p.Id))
+                  .Columns(columns =>
+                      {
+                          columns.Bound(x => x.Id).Visible(false);
+                          columns.Bound(x => x.FirstName).Sortable(true).Filterable(true);
+                          columns.Bound(x => x.LastName).Sortable(true).Filterable(true);
+                          columns.Bound(x => x.UserName).Sortable(true).Filterable(true);
+                          columns.Bound(x => x.Email).Sortable(false).Filterable(false);
+                          columns.Bound(x => x.Role).Sortable(false).Filterable(false);
+                          columns.Bound(x => x.Active)
+                                 .Template(
+                                     @<img alt="" src="@Url.Content("~/Content/images/active-" + item.Active.ToString().ToLowerInvariant() + ".gif")" />
+                              ).Sortable(false).Filterable(false)
+                                 .ClientTemplate("<img alt='' src='" + Url.Content("~/Content/images/") + "active-<#= Active #>.gif' />").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" });
+                          columns.Bound(x => x.CreatedBy).Sortable(false).Filterable(false);
+                          columns.Bound(x => x.CreatedOn).Sortable(true).Filterable(true);
+                          columns.Bound(x => x.Id)
+                                 .Filterable(false).Sortable(false)
+                                 .Template(x => Html.Raw(@"<a onclick='EditUser(" + x.Id + ");return false;' class='btn btn-sm btn-primary'><i class='fa fa-pencil'></i></a><a onclick='ConfirmDelete(" + x.Id + ");return false;' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></i></a>"))
+                                 .ClientTemplate(@"<a onclick='EditUser(<#= Id #>);return false;' class='btn btn-sm btn-primary'><i class='fa fa-pencil'></i></a><a onclick='ConfirmDelete(<#= Id #>);return false;' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></i></a>")
+                                 .Title("Actions").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" });
+                      })
+                  .Sortable()
+                  .Filterable()
+                  .Pageable(settings => settings.Total(Model.Total).PageSize(10).Style(GridPagerStyles.PageSizeDropDown | GridPagerStyles.NextPreviousAndNumeric).Position(GridPagerPosition.Bottom))
+                  .DataBinding(dataBinding => dataBinding.Ajax().Select("Index", "ManageUser"))
+                  .ClientEvents(events => events.OnDataBinding("onDataBinding"))
+                  .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                  .EnableCustomBinding(true))
+
+        }
+    </div>
+</div>

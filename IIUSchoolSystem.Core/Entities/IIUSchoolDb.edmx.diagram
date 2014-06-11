@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8d74670bcb464335b45c69119b9ec040" Name="Diagram1">
+        <EntityTypeShape EntityType="IIUSchoolSystemDbModel.ErrorLog" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIUSchoolSystemDbModel.MailLog" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIUSchoolSystemDbModel.PermissionRecord" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIUSchoolSystemDbModel.Role" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIUSchoolSystemDbModel.Setting" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIUSchoolSystemDbModel.State" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IIUSchoolSystemDbModel.User" Width="1.5" PointX="3" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="IIUSchoolSystemDbModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="IIUSchoolSystemDbModel.PermissionRecordRoleMapping" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

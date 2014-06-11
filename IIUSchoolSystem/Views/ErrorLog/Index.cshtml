@@ -1,0 +1,32 @@
+﻿@using Telerik.Web.Mvc.UI
+@model Telerik.Web.Mvc.GridModel<IIUSchoolSystem.Models.ErrorLogModel>
+@{
+    ViewBag.Title = "Error List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-header">
+    <h1>
+        Error List
+    </h1>
+</div>
+
+@(Html.Telerik().Grid(Model.Data)
+                    .Name("erroLog-grid")
+                      .DataKeys(keys => keys.Add(p => p.Id))
+                    .Columns(columns =>
+                                 {
+                                     columns.Bound(x => x.Id).Visible(false);
+                                     columns.Bound(x => x.IpAddress).Sortable(true).Filterable(true);
+                                     columns.Bound(x => x.ShortMessage).Sortable(true).Filterable(true);
+                                     columns.Bound(x => x.UserId).Sortable(true).Filterable(true);
+                                     columns.Bound(x => x.PageUrl).Sortable(false).Filterable(false);
+                                     columns.Bound(x => x.CreatedOn).Sortable(false).Filterable(false);
+                                 })
+                         .Sortable()
+                         .Filterable()
+                                                             .Pageable(settings => settings.Total(Model.Total).PageSize(10).Style(GridPagerStyles.PageSizeDropDown | GridPagerStyles.NextPreviousAndNumeric).Position(GridPagerPosition.Bottom))
+                                                .DataBinding(dataBinding => dataBinding.Ajax().Select("Index", "ErrorLog"))
+                                            .ClientEvents(events => events.OnDataBinding("onDataBinding"))
+                                            .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                                            .EnableCustomBinding(true))

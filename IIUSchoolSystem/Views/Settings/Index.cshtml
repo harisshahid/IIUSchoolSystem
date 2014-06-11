@@ -1,0 +1,53 @@
+﻿@using Telerik.Web.Mvc.UI
+@model Telerik.Web.Mvc.GridModel<IIUSchoolSystem.Models.SettingModel>
+@{
+    ViewBag.Title = "Application Settings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    @Scripts.Render("~/UserScripts/Settings.js")
+}
+<div class="page-header">
+    <h1>
+        Settings
+        <small>
+            <i class="fa fa-angle-double-right"></i>
+            Creation &amp; Updation
+        </small>
+        <button type="submit" class="btn btn-success btn-sm" id="createSetting" style="float: right;">Create Settings</button>
+    </h1>
+</div>
+@Html.Partial("_EditOrCreateSettings")
+<div class="widget">
+    <div class="widget-body form">
+
+        @using (Html.BeginForm())
+        {
+            @(Html.Telerik().Grid(Model.Data)
+                    .Name("settings-grid")
+                      .DataKeys(keys => keys.Add(p => p.Id))
+                    .Columns(columns =>
+                                 {
+                                     columns.Bound(x => x.Id).Visible(false);
+                                     columns.Bound(x => x.SettingName).Sortable(true).Filterable(true);
+                                     columns.Bound(x => x.Value).Sortable(true).Filterable(true);
+                                     columns.Bound(x => x.Description).Sortable(true).Filterable(true);
+                                     columns.Bound(x => x.CreatedBy).Sortable(false).Filterable(false);
+                                     columns.Bound(x => x.Id)
+                                     .Filterable(false).Sortable(false)
+                                     .Template(x => Html.Raw(@"<a onclick='EditSettings(" + x.Id + ");return false;' class='btn btn-sm btn-primary'><i class='fa fa-pencil'></i></a><a onclick='ConfirmDelete(" + x.Id + ");return false;' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></i></a>")).Width(135)
+                                     .ClientTemplate(@"<a onclick='EditSettings(<#= Id #>);return false;' class='btn btn-sm btn-primary'><i class='fa fa-pencil'></i></a><a onclick='ConfirmDelete(<#= Id #>);return false;' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></i></a>").Width(135)
+                                     .Title("Actions").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" }).Width(135);
+                                 })
+                         .Sortable()
+                         .Filterable()
+                             .Pageable(settings => settings.Total(Model.Total).PageSize(10).Style(GridPagerStyles.PageSizeDropDown | GridPagerStyles.NextPreviousAndNumeric).Position(GridPagerPosition.Bottom))
+                                            .DataBinding(dataBinding => dataBinding.Ajax().Select("Index", "Settings"))
+                                            .ClientEvents(events => events.OnDataBinding("onDataBinding"))
+                                            .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                                            .EnableCustomBinding(true))
+
+        }
+    </div>
+</div>

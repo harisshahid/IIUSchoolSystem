@@ -1,0 +1,27 @@
+﻿<div class="box box-primary" id="createRole" style="display: none;">
+    <div class="box-header">
+        <h3 class="box-title" id="headingRole">New Role</h3>
+    </div>
+    <form id="roleForm">
+        <div class="box-body">
+            <div class="form-group">
+                <label for="roleName">Role Name</label>
+                <input type="text" class="form-control required" name="roleName" id="roleName" />
+            </div>
+            <div class="form-group">
+                <label for="roleDescription">Description</label>
+                <textarea class="form-control" name="roleDescription" id="roleDescription"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="Active">Active</label>
+                <input type="checkbox" id="Active" name="Active" />
+            </div>
+            <input type="hidden" id="Id" value="0" />
+            <div class="buttons-align-right" style="padding-right: 30px;">
+                <button type="button" class="btn btn-success btn-sm" id="CreateOrUpdateRole">Save</button>
+                <button type="button" id="clearButton" onclick="ResetFields();" class="btn btn-danger btn-sm">Clear</button>
+                <button type="button" id="cancelRoleCreation" class="btn btn-sm">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

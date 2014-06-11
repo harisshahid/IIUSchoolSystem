@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="IIUSchoolSystemDbModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="IIUSchoolSystemDbModelStoreContainer">
+          <EntitySet Name="ErrorLog" EntityType="IIUSchoolSystemDbModel.Store.ErrorLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MailLog" EntityType="IIUSchoolSystemDbModel.Store.MailLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PermissionRecord" EntityType="IIUSchoolSystemDbModel.Store.PermissionRecord" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="PermissionRecordRoleMapping" EntityType="IIUSchoolSystemDbModel.Store.PermissionRecordRoleMapping" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Role" EntityType="IIUSchoolSystemDbModel.Store.Role" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Settings" EntityType="IIUSchoolSystemDbModel.Store.Settings" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="State" EntityType="IIUSchoolSystemDbModel.Store.State" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="IIUSchoolSystemDbModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_PermissionRecordRoleMapping_Role" Association="IIUSchoolSystemDbModel.Store.FK_PermissionRecordRoleMapping_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="PermissionRecordRoleMapping" EntitySet="PermissionRecordRoleMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="IIUSchoolSystemDbModel.Store.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="PermissionRecord_CustomerRoles_Source" Association="IIUSchoolSystemDbModel.Store.PermissionRecord_CustomerRoles_Source">
+            <End Role="PermissionRecord" EntitySet="PermissionRecord" />
+            <End Role="PermissionRecordRoleMapping" EntitySet="PermissionRecordRoleMapping" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShortMessage" Type="nvarchar(max)" />
+          <Property Name="FullMessage" Type="nvarchar(max)" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserId" Type="bigint" />
+          <Property Name="PageUrl" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="bigint" />
+          <Property Name="LastUpdatedByUserId" Type="bigint" />
+          <Property Name="LastUpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="MailLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TenantId" Type="bigint" />
+          <Property Name="MailFrom" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="MailTo" Type="nvarchar" Nullable="false" MaxLength="250" />
+          <Property Name="Subject" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="Message" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Bcc" Type="nvarchar" MaxLength="250" />
+          <Property Name="Cc" Type="nvarchar" MaxLength="250" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="bigint" />
+          <Property Name="LastUpdatedByUserId" Type="bigint" />
+          <Property Name="LastUpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PermissionRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SystemName" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Category" Type="nvarchar" Nullable="false" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="PermissionRecordRoleMapping">
+          <Key>
+            <PropertyRef Name="PermissionRecord_Id" />
+            <PropertyRef Name="Role_Id" />
+          </Key>
+          <Property Name="PermissionRecord_Id" Type="int" Nullable="false" />
+          <Property Name="Role_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="255" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="bigint" />
+          <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="LastUpdatedByUserId" Type="bigint" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Settings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SettingName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Value" Type="varchar" MaxLength="1000" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="bigint" />
+          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="LastUpdatedByUserId" Type="bigint" />
+          <Property Name="LastUpdatedOn" Type="datetime" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Abbreviation" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserGuid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="16" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="100" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="ZipCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="250" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="Cell" Type="nvarchar" MaxLength="250" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="250" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="LastIpAddress" Type="nvarchar(max)" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="bigint" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="datetime" Nullable="false" />
+          <Property Name="LastLoginDate" Type="datetime" />
+          <Property Name="LastUpdatedByUserId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PermissionRecordRoleMapping_Role">
+          <End Role="Role" Type="IIUSchoolSystemDbModel.Store.Role" Multiplicity="1" />
+          <End Role="PermissionRecordRoleMapping" Type="IIUSchoolSystemDbModel.Store.PermissionRecordRoleMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PermissionRecordRoleMapping">
+              <PropertyRef Name="Role_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="IIUSchoolSystemDbModel.Store.Role" Multiplicity="1" />
+          <End Role="User" Type="IIUSchoolSystemDbModel.Store.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PermissionRecord_CustomerRoles_Source">
+          <End Role="PermissionRecord" Type="IIUSchoolSystemDbModel.Store.PermissionRecord" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PermissionRecordRoleMapping" Type="IIUSchoolSystemDbModel.Store.PermissionRecordRoleMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PermissionRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PermissionRecordRoleMapping">
+              <PropertyRef Name="PermissionRecord_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="IIUSchoolSystemDbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="IIUSchoolSystemDbEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="ErrorLogs" EntityType="IIUSchoolSystemDbModel.ErrorLog" />
+          <EntitySet Name="MailLogs" EntityType="IIUSchoolSystemDbModel.MailLog" />
+          <EntitySet Name="PermissionRecords" EntityType="IIUSchoolSystemDbModel.PermissionRecord" />
+          <EntitySet Name="Roles" EntityType="IIUSchoolSystemDbModel.Role" />
+          <EntitySet Name="Settings" EntityType="IIUSchoolSystemDbModel.Setting" />
+          <EntitySet Name="States" EntityType="IIUSchoolSystemDbModel.State" />
+          <EntitySet Name="Users" EntityType="IIUSchoolSystemDbModel.User" />
+          <AssociationSet Name="FK_User_Role" Association="IIUSchoolSystemDbModel.FK_User_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="PermissionRecordRoleMapping" Association="IIUSchoolSystemDbModel.PermissionRecordRoleMapping">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="PermissionRecord" EntitySet="PermissionRecords" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ErrorLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="ShortMessage" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="FullMessage" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="IpAddress" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="UserId" Type="Int64" />
+          <Property Name="PageUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int64" />
+          <Property Name="LastUpdatedByUserId" Type="Int64" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="MailLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="TenantId" Type="Int64" />
+          <Property Name="MailFrom" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="MailTo" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="Bcc" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Cc" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int64" />
+          <Property Name="LastUpdatedByUserId" Type="Int64" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PermissionRecord">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="SystemName" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Roles" Relationship="IIUSchoolSystemDbModel.PermissionRecordRoleMapping" FromRole="PermissionRecord" ToRole="Role" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int64" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastUpdatedByUserId" Type="Int64" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Users" Relationship="IIUSchoolSystemDbModel.FK_User_Role" FromRole="Role" ToRole="User" />
+          <NavigationProperty Name="PermissionRecords" Relationship="IIUSchoolSystemDbModel.PermissionRecordRoleMapping" FromRole="Role" ToRole="PermissionRecord" />
+        </EntityType>
+        <EntityType Name="Setting">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="SettingName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="Value" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+          <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedByUserId" Type="Int64" />
+          <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedByUserId" Type="Int64" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Abbreviation" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="UserGuid" Type="Guid" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="16" Unicode="true" FixedLength="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Address" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <Property Name="ZipCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="City" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="Cell" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="LastIpAddress" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int64" Nullable="false" />
+          <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="LastUpdatedByUserId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="IIUSchoolSystemDbModel.FK_User_Role" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="IIUSchoolSystemDbModel.Role" Multiplicity="1" />
+          <End Role="User" Type="IIUSchoolSystemDbModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PermissionRecordRoleMapping">
+          <End Role="Role" Type="IIUSchoolSystemDbModel.Role" Multiplicity="*" />
+          <End Role="PermissionRecord" Type="IIUSchoolSystemDbModel.PermissionRecord" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="IIUSchoolSystemDbModelStoreContainer" CdmEntityContainer="IIUSchoolSystemDbEntities">
+          <EntitySetMapping Name="ErrorLogs">
+            <EntityTypeMapping TypeName="IIUSchoolSystemDbModel.ErrorLog">
+              <MappingFragment StoreEntitySet="ErrorLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ShortMessage" ColumnName="ShortMessage" />
+                <ScalarProperty Name="FullMessage" ColumnName="FullMessage" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="PageUrl" ColumnName="PageUrl" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MailLogs">
+            <EntityTypeMapping TypeName="IIUSchoolSystemDbModel.MailLog">
+              <MappingFragment StoreEntitySet="MailLog">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
+                <ScalarProperty Name="MailFrom" ColumnName="MailFrom" />
+                <ScalarProperty Name="MailTo" ColumnName="MailTo" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
+                <ScalarProperty Name="Bcc" ColumnName="Bcc" />
+                <ScalarProperty Name="Cc" ColumnName="Cc" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PermissionRecords">
+            <EntityTypeMapping TypeName="IIUSchoolSystemDbModel.PermissionRecord">
+              <MappingFragment StoreEntitySet="PermissionRecord">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SystemName" ColumnName="SystemName" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="IIUSchoolSystemDbModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Settings">
+            <EntityTypeMapping TypeName="IIUSchoolSystemDbModel.Setting">
+              <MappingFragment StoreEntitySet="Settings">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="SettingName" ColumnName="SettingName" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="IIUSchoolSystemDbModel.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Abbreviation" ColumnName="Abbreviation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="IIUSchoolSystemDbModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserGuid" ColumnName="UserGuid" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Cell" ColumnName="Cell" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="LastIpAddress" ColumnName="LastIpAddress" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+                <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+                <ScalarProperty Name="LastLoginDate" ColumnName="LastLoginDate" />
+                <ScalarProperty Name="LastUpdatedByUserId" ColumnName="LastUpdatedByUserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="PermissionRecordRoleMapping" TypeName="IIUSchoolSystemDbModel.PermissionRecordRoleMapping" StoreEntitySet="PermissionRecordRoleMapping">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="Role_Id" />
+            </EndProperty>
+            <EndProperty Name="PermissionRecord">
+              <ScalarProperty Name="Id" ColumnName="PermissionRecord_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

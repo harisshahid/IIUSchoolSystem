@@ -1,0 +1,76 @@
+﻿@using IIUSchoolSystem.Models
+@using Telerik.Web.Mvc.UI
+@model IIUSchoolSystem.Models.PermissionRecordModel
+@{
+    ViewBag.Title = "Manage Permissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header">
+    <h1>Permissions
+        <small>
+            <i class="fa fa-angle-double-right"></i>
+            Updation
+        </small>
+    </h1>
+</div>
+<div class="widget">
+    <div class="box-body">
+        <div class="form-group">
+            <label for="RoleId">Select a Role</label>
+            @Html.DropDownList("RoleId", new SelectList(ViewBag.Roles, "Id", "Name", 1), new { @class = "form-control" })
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @(Html.Telerik().Grid<PermissionRecordModel>(Model.PermissionRecord.Data)
+                  .Name("roles-grid")
+                  .DataKeys(keys => keys.Add(p => p.Id))
+                  .Columns(columns =>
+                               {
+                                   columns.Bound(x => x.RoleId).Visible(true);
+                                   columns.Bound(x => x.Name).ReadOnly(true);
+                                   columns.Bound(x => x.Category).ReadOnly(true);
+                                   columns.Bound(x => x.SystemName).ReadOnly(true);
+                                   columns.Bound(x => x.Allow)
+                                       .Template(
+                                    @<img alt="" src="@Url.Content("~/Content/images/active-" + item.Allow.ToString().ToLowerInvariant() + ".gif")" />
+                                       ).Sortable(false).Filterable(false)
+
+                                       .ClientTemplate("<img alt='' src='" + Url.Content("~/Content/images/") + "active-<#= Allow #>.gif' />").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" });
+                                   columns.Command(commands => commands.Edit().ButtonType(GridButtonType.Image)).Title("Action").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" });
+                               })
+          .Pageable(settings => settings.Total(Model.PermissionRecord.Total).PageSize(100).Position(GridPagerPosition.Bottom))
+                                                                          .DataBinding(dataBinding => dataBinding.Ajax().Select("Index", "ManagePermissions")
+                                                                          .Update("UpdatePermissionRecord", "ManagePermissions"))
+          .ClientEvents(events => events.OnDataBinding("onDataBinding"))
+          .Editable(editable => editable.Mode(GridEditMode.InLine))
+          .EnableCustomBinding(true))
+
+    }
+</div>
+
+<style>
+    .t-grid-header .t-header:first-child, .t-grid tbody td:first-child, .t-grid tfoot td:first-child
+    {
+        display: none;
+    }
+</style>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            $('#RoleId').live("change", function () {
+                var grid = $('#roles-grid').data('tGrid');
+                grid.ajaxRequest();
+            });
+        });
+
+        function onDataBinding(e) {
+            var searchModel = {
+                RoleId: $('#RoleId').val()
+            };
+            e.data = searchModel;
+        }
+    </script>
+}

@@ -1,0 +1,54 @@
+﻿@using IIUSchoolSystem.Models
+@using Telerik.Web.Mvc.UI
+@model Telerik.Web.Mvc.GridModel<IIUSchoolSystem.Models.RoleModel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section scripts
+{
+    @Scripts.Render("~/UserScripts/Role.js")
+}
+<div class="page-header">
+    <h1>Roles
+        <small><i class="fa fa-angle-double-right"></i>Creation & Updation</small>
+        <button type="submit" class="btn btn-success btn-sm" id="createNewRoleButton" style="float: right;">Create Role</button>
+    </h1>
+</div>
+@Html.Partial("_EditOrCreatRole")
+<div class="widget">
+    <div class="widget-body form">
+        @using (Html.BeginForm())
+        {
+            @(Html.Telerik().Grid(Model.Data)
+                    .Name("roles-grid")
+                      .DataKeys(keys => keys.Add(p => p.Id))
+                    .Columns(columns =>
+                                 {
+                                     columns.Bound(x => x.Id).Visible(false);
+                                     columns.Bound(x => x.Name).Sortable(true).Filterable(true);
+                                     columns.Bound(x => x.Description).Sortable(false).Filterable(false);
+                                     columns.Bound(x => x.Active)
+                                         .Template(
+                                        @<img alt="" src="@Url.Content("~/Content/images/active-" + item.Active.ToString().ToLowerInvariant() + ".gif")" />
+                                         ).Sortable(false).Filterable(false)
+                                         .ClientTemplate("<img alt='' src='" + Url.Content("~/Content/images/") + "active-<#= Active #>.gif' />").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" });
+                                     columns.Bound(x => x.CreatedBy).Sortable(false).Filterable(false);
+                                     columns.Bound(x => x.CreatedOn).Sortable(false).Filterable(false);
+                                     columns.Bound(x => x.Id)
+                                     .Filterable(false).Sortable(false)
+                                     .Template(x => Html.Raw(@"<a onclick='EditRole(" + x.Id + ");return false;' class='btn btn-sm btn-primary'><i class='fa fa-pencil'></i></a><a onclick='ConfirmDelete(" + x.Id + ");return false;' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></i></a>"))
+                                     .ClientTemplate(@"<a onclick='EditRole(<#= Id #>);return false;' class='btn btn-sm btn-primary'><i class='fa fa-pencil'></i></a><a onclick='ConfirmDelete(<#= Id #>);return false;' class='btn btn-sm btn-danger'><i class='fa fa-trash-o'></i></a>")
+                                     .Title("Actions").HtmlAttributes(new { style = "text-align:center" }).HeaderHtmlAttributes(new { style = "text-align:center" });
+                                 })
+                             .Sortable()
+                             .Filterable()
+                             .Pageable(settings => settings.Total(Model.Total).PageSize(10).Position(GridPagerPosition.Bottom))
+                                                                                    .DataBinding(dataBinding => dataBinding.Ajax().Select("Index", "ManageRoles"))
+                                                .ClientEvents(events => events.OnDataBinding("onDataBinding"))
+                                                .Editable(editable => editable.Mode(GridEditMode.PopUp))
+                                                .EnableCustomBinding(true))
+
+        }
+    </div>
+</div>

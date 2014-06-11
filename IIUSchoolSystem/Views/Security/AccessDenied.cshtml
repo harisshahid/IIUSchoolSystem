@@ -1,0 +1,32 @@
+﻿@model dynamic
+
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <title>Access Denied</title>
+    <link href="~/Content/css/Site.css" rel="stylesheet" />
+    <link href="~/Content/css/Font-awesome.min.css" rel="stylesheet" />
+</head>
+<body style="background: purple;">
+    <div class="error-wrap error-wrap-404">
+        <div class="metro big terques">
+            <span style="padding-top: 14px;"> <i class="fa fa-lock"></i> <br />Access Denied </span>
+        </div>
+        <div class="metro big red" style="width: 500px;">
+            <span style="padding-top: 20px;font-size: 40px;color: wheat;" class="page-txt">
+                @{ var s = new IIUSchoolSystem.Models.SettingRepository().T("AccessDenied.Message", "notes");
+            }
+            @Html.Raw(s)
+        </span>
+    </div>
+    <div class="clearfix"></div>
+    <div class="metro gray">
+        <a style="cursor:pointer;" onclick="javascript: history.back(-1); return false;" class="home"><i class="fa fa-home"></i></a>
+        <div class="clearfix"></div>
+        <a style="cursor:pointer;" onclick="javascript: history.back(-1); return false;"><span style="font-size: 18px; padding-top: 5px; color: #fff;">Go Back</span></a>
+    </div>
+</div>
+</body>
+</html>

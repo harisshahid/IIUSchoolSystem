@@ -1,0 +1,27 @@
+﻿<div class="box box-primary" id="createAccount" style="display: none;">
+    <div class="box-header">
+        <h3 class="box-title" id="headingSetting">New Setting</h3>
+    </div>
+    <form id="settingForm">
+        <div class="box-body">
+            <div class="form-group">
+                <label for="SettingName">Setting Name</label>
+                <input type="text" class="form-control required" name="SettingName" id="SettingName" />
+            </div>
+            <div class="form-group">
+                <label for="Value">Value</label>
+                <input type="text" class="form-control required" name="Value" id="Value" />
+            </div>
+            <div class="form-group">
+                <label for="Description">Description</label>
+                <textarea class="form-control" name="Description" id="Description"></textarea>
+            </div>
+            <input type="hidden" id="hdnId" value="0" />
+            <div class="buttons-align-right">
+                <button type="button" class="btn btn-success" id="CreateOrUpdateSetting">Save</button>
+                <button type="button" id="clearButton" onclick="ResetFields();" class="btn btn-danger">Clear</button>
+                <button type="button" id="cancelSettingCreation" class="btn">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
