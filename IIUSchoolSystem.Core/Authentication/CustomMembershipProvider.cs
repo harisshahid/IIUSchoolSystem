@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Security;
 using IIUSchoolSystem.Core.Entities;
 using IIUSchoolSystem.Core.Repository;
@@ -85,7 +86,7 @@ namespace IIUSchoolSystem.Core.Authentication
         /// <returns> The name of the application using the custom membership provider. </returns>
         public override string ApplicationName
         {
-            get { return "Click2Me"; }
+            get { return "IIUSchoolSystem"; }
             set { }
         }
 
@@ -173,6 +174,12 @@ namespace IIUSchoolSystem.Core.Authentication
             if (user != null && user.Id > 0)
             {
                 MembershipContext.Current.User = user;
+                user.LastLoginDate = DateTime.Now;
+                user.LastIpAddress = HttpContext.Current.Request.UserHostAddress;
+
+                _unitOfWork.UserRepository.Update(user);
+                _unitOfWork.Save();
+
                 return true;
             }
             return false;

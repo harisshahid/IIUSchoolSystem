@@ -1,0 +1,9 @@
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\bin\Debug\IIUSchoolSystem.Core.dll.config
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\bin\Debug\IIUSchoolSystem.Core.dll
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\bin\Debug\IIUSchoolSystem.Core.pdb
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\bin\Debug\EntityFramework.dll
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\bin\Debug\Telerik.Web.Mvc.dll
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\bin\Debug\EntityFramework.xml
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\obj\Debug\IIUSchoolSystem.Core.csprojResolveAssemblyReference.cache
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\obj\Debug\IIUSchoolSystem.Core.dll
+C:\Users\haris\Documents\GitHub\IIUSchoolSystem\IIUSchoolSystem.Core\obj\Debug\IIUSchoolSystem.Core.pdb

@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IIUSchoolSystemDbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="IIUSchoolSystemDbEntities" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="ErrorLogs" EntityType="IIUSchoolSystemDbModel.ErrorLog" />
+    <EntitySet Name="MailLogs" EntityType="IIUSchoolSystemDbModel.MailLog" />
+    <EntitySet Name="PermissionRecords" EntityType="IIUSchoolSystemDbModel.PermissionRecord" />
+    <EntitySet Name="Roles" EntityType="IIUSchoolSystemDbModel.Role" />
+    <EntitySet Name="Settings" EntityType="IIUSchoolSystemDbModel.Setting" />
+    <EntitySet Name="States" EntityType="IIUSchoolSystemDbModel.State" />
+    <EntitySet Name="Users" EntityType="IIUSchoolSystemDbModel.User" />
+    <AssociationSet Name="FK_User_Role" Association="IIUSchoolSystemDbModel.FK_User_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="PermissionRecordRoleMapping" Association="IIUSchoolSystemDbModel.PermissionRecordRoleMapping">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="PermissionRecord" EntitySet="PermissionRecords" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ErrorLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="ShortMessage" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="FullMessage" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="IpAddress" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="UserId" Type="Int64" />
+    <Property Name="PageUrl" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int64" />
+    <Property Name="LastUpdatedByUserId" Type="Int64" />
+    <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="MailLog">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TenantId" Type="Int64" />
+    <Property Name="MailFrom" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="MailTo" Type="String" Nullable="false" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="Subject" Type="String" Nullable="false" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Bcc" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="Cc" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="Type" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int64" />
+    <Property Name="LastUpdatedByUserId" Type="Int64" />
+    <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PermissionRecord">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="SystemName" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="Category" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Roles" Relationship="IIUSchoolSystemDbModel.PermissionRecordRoleMapping" FromRole="PermissionRecord" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int64" />
+    <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastUpdatedByUserId" Type="Int64" />
+    <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Users" Relationship="IIUSchoolSystemDbModel.FK_User_Role" FromRole="Role" ToRole="User" />
+    <NavigationProperty Name="PermissionRecords" Relationship="IIUSchoolSystemDbModel.PermissionRecordRoleMapping" FromRole="Role" ToRole="PermissionRecord" />
+  </EntityType>
+  <EntityType Name="Setting">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="SettingName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+    <Property Name="Value" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="1000" Unicode="false" FixedLength="false" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="Int64" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedByUserId" Type="Int64" />
+    <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Abbreviation" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="UserGuid" Type="Guid" Nullable="false" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="16" Unicode="true" FixedLength="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="LastName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Address" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+    <Property Name="ZipCode" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="City" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="StateId" Type="Int32" />
+    <Property Name="Cell" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="Phone" Type="String" MaxLength="250" Unicode="true" FixedLength="false" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="Deleted" Type="Boolean" Nullable="false" />
+    <Property Name="LastIpAddress" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedByUserId" Type="Int64" Nullable="false" />
+    <Property Name="LastUpdatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastLoginDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedByUserId" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Role" Relationship="IIUSchoolSystemDbModel.FK_User_Role" FromRole="User" ToRole="Role" />
+  </EntityType>
+  <Association Name="FK_User_Role">
+    <End Role="Role" Type="IIUSchoolSystemDbModel.Role" Multiplicity="1" />
+    <End Role="User" Type="IIUSchoolSystemDbModel.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PermissionRecordRoleMapping">
+    <End Role="Role" Type="IIUSchoolSystemDbModel.Role" Multiplicity="*" />
+    <End Role="PermissionRecord" Type="IIUSchoolSystemDbModel.PermissionRecord" Multiplicity="*" />
+  </Association>
+</Schema>
